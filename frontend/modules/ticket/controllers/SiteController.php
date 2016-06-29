@@ -318,11 +318,24 @@ class SiteController extends Controller
 
     public function actionTicketReport()
     {
-        $search = '';
         $uid = Yii::$app->user->identity->id;
-        if(isset($_GET['search']))
+        
+        $progress ='';
+        if(isset($_GET['progress']))
         {
-            $search =  strtolower(trim(strip_tags($_GET['search'])));
+            $progress =  (int)$_GET['progress'];
+        }
+
+        $month ='';
+        if(isset($_GET['month']))
+        {
+            $month =  (int)$_GET['month'];
+        }
+
+        $year ='';
+        if(isset($_GET['year']))
+        {
+            $year =  (int)$_GET['year'];
         }
         
         $query = (new \yii\db\Query())
@@ -340,13 +353,20 @@ class SiteController extends Controller
                     ])
                     ->from('tbl_ticket tt')
                     ->leftJoin('user us', 'us.id = tt.user_id');
-                    
-        if($search !== '')
+            
+        $ticket_status = '';        
+        if($progress != '1000')
         {
-
-            $query->where('lower(ticket_name) LIKE "%'.$search.'%" ')
-                    ->orWhere('lower(ticket_desc) LIKE "%'.$search.'%"');
+            $ticket_status = ' AND ticket_status ='.$progress.' ';  
         }
+
+        $year_query = '';
+        if($month !== '' && $year !== '')
+        {
+            $year_query = ' AND (year(ticket_date_create)='.$year.' AND month(ticket_date_create)='.$month.' ) ';
+        }
+
+        $query->where('1 '.$ticket_status.$year_query);
         
         $countQuery = clone $query;
         $pageSize = 10;
@@ -360,12 +380,15 @@ class SiteController extends Controller
             ->all();
         
 
-        return $this->render('allticket', [
+        return $this->render('report', [
             'models' => $models,
             'pages' => $pages,
             'offset' =>$pages->offset,
             'page' =>$pages->page,
-            'search' =>$search
+            'year' =>$year,
+            'month' =>$month,
+            'progress' =>$progress,
+            //'search' =>$search
         ]);  
     }
 }

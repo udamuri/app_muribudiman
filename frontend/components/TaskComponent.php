@@ -331,6 +331,22 @@ class TaskComponent extends Component
 		return $html;
 	}
 
+	//Yii::$app->mycomponent->assignedListNormal($tid);
+	public function assignedListNormal($tid)
+	{
+		$model = $this->getAssignedTicket($tid);
+		$html = 'assigned To : ';
+		if($model)
+		{
+			foreach ($model as $value) 
+			{
+				$html .= $value['username'].'('.$value['firstname'].' '.$value['lastname'].')&nbsp';
+			}
+		}
+
+		return $html;
+	}
+
 	//Yii::$app->mycomponent->calculateDate($start, $end);
 	public function calculateDate($start, $end)
 	{
