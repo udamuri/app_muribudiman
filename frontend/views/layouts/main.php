@@ -47,6 +47,10 @@ AppAsset::register($this);
         {
             $menuItems[] = ['label' => 'Check Ticket / Reports', 'url' => ['/all-ticket']];
         }
+        if(Yii::$app->mycomponent->isUserRole('admin-administrasi-support-manager', Yii::$app->user->identity->level_user))
+        {
+            $menuItems[] = ['label' => 'Reports', 'url' => ['/ticket-report']];
+        }
         if(Yii::$app->mycomponent->isUserRole('admin', Yii::$app->user->identity->level_user))
         {
             $menuItems[] = '<li class="dropdown padding_null">

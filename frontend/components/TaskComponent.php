@@ -46,6 +46,10 @@ class TaskComponent extends Component
 			{
 				return true;
 			}
+			else if($type === 'admin-administrasi-support-manager' && ($level === Constants::ADMIN || $level === Constants::ADMINISTRASI_IT || $level === Constants::IT_SUPPORT || $level === Constants::MANAGER_IT))
+			{
+				return true;
+			}
 
 			return false;
 		}

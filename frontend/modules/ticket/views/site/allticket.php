@@ -32,7 +32,7 @@ $this->registerJs($jsx);
 
     <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-            <form  id="searchform" class="input-group"  action="<?=Yii::$app->homeUrl;?>user-ticket"  method="GET" > 
+            <form  id="searchform" class="input-group"  action="<?=Yii::$app->homeUrl;?>all-ticket"  method="GET" > 
                 <input type="text" name="search" class="form-control" value="<?=$search;?>" placeholder="Search for...">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">Go!</button>

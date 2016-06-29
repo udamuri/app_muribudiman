@@ -19,3 +19,10 @@ return [
         ],
     ],
 ];
+
+menggunakan .htaccess
+root aplikasi / redirect aplikasi ke do frontend/web/
+
+frontend/web/.htaccess  menghilangkan index.php 
+
+frontend/web/js/ file .js 

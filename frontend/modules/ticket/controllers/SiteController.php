@@ -34,8 +34,16 @@ class SiteController extends Controller
                         'actions' => ['all-ticket', 'get-it-support', 'set-assigned', 'set-ticket-status'],
                         'allow' => true,
                         'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                           return Yii::$app->mycomponent->isUserRole('admin-administrasi-support', Yii::$app->user->identity->level_user);
+                        }
+                    ],
+                    [
+                        'actions' => ['ticket-report'],
+                        'allow' => true,
+                        'roles' => ['@'],
 						'matchCallback' => function ($rule, $action) {
-						   return Yii::$app->mycomponent->isUserRole('admin-administrasi-support', Yii::$app->user->identity->level_user);
+						   return Yii::$app->mycomponent->isUserRole('admin-administrasi-support-manager', Yii::$app->user->identity->level_user);
 						}
                     ],
                 ],
@@ -306,5 +314,58 @@ class SiteController extends Controller
             return \yii\helpers\Json::encode($data);
         }
         
+    }
+
+    public function actionTicketReport()
+    {
+        $search = '';
+        $uid = Yii::$app->user->identity->id;
+        if(isset($_GET['search']))
+        {
+            $search =  strtolower(trim(strip_tags($_GET['search'])));
+        }
+        
+        $query = (new \yii\db\Query())
+                    ->select([
+                        'tt.ticket_id',
+                        'tt.ticket_name',
+                        'tt.ticket_desc',
+                        'tt.ticket_date_create',
+                        'tt.ticket_date_update',
+                        'tt.ticket_status',
+                        'tt.user_id',
+                        'us.firstname',
+                        'us.lastname',
+                        'us.level_user',
+                    ])
+                    ->from('tbl_ticket tt')
+                    ->leftJoin('user us', 'us.id = tt.user_id');
+                    
+        if($search !== '')
+        {
+
+            $query->where('lower(ticket_name) LIKE "%'.$search.'%" ')
+                    ->orWhere('lower(ticket_desc) LIKE "%'.$search.'%"');
+        }
+        
+        $countQuery = clone $query;
+        $pageSize = 10;
+        $pages = new Pagination([
+                'totalCount' => $countQuery->count(), 
+                'pageSize'=>$pageSize
+            ]);
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->orderBy(['ticket_id'=>SORT_DESC])
+            ->all();
+        
+
+        return $this->render('allticket', [
+            'models' => $models,
+            'pages' => $pages,
+            'offset' =>$pages->offset,
+            'page' =>$pages->page,
+            'search' =>$search
+        ]);  
     }
 }
