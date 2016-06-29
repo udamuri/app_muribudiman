@@ -355,7 +355,7 @@ class SiteController extends Controller
                     ->leftJoin('user us', 'us.id = tt.user_id');
             
         $ticket_status = '';        
-        if($progress != '1000')
+        if($progress != '1000' && $progress !== '')
         {
             $ticket_status = ' AND ticket_status ='.$progress.' ';  
         }
