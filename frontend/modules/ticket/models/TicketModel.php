@@ -113,5 +113,65 @@ class TicketModel extends Model
 		}
 		
 	}
+
+	public function printMpdf($progress = 0, $month = 0, $year= 0)
+	{
+
+		$ticket_status = '';        
+        if($progress != '1000' && $progress !== '' )
+        {
+            $ticket_status = ' AND ticket_status ='.$progress.' ';  
+        }
+
+        $year_query = '';
+        if($month !== '' && $year !== '' && $month !== 0 && $year !== 0)
+        {
+            $year_query = ' AND (year(ticket_date_create)='.$year.' AND month(ticket_date_create)='.$month.' ) ';
+        }
+
+		$row = (new \yii\db\Query())
+			->select([
+				'tt.ticket_id',
+                'tt.ticket_name',
+                'tt.ticket_desc',
+                'tt.ticket_date_create',
+                'tt.ticket_date_update',
+                'tt.ticket_status',
+                'tt.user_id',
+                'us.firstname',
+                'us.lastname',
+                'us.level_user',
+			])
+			->from('tbl_ticket tt')
+            ->leftJoin('user us', 'us.id = tt.user_id')
+            ->where('1 '.$ticket_status.$year_query)
+			->all();
+		$arrData = array();
+	
+		if($row)
+		{
+			foreach ($row as $value) {
+				$arrData[] = array(
+					'ticket_id'=>$value['ticket_id'],
+					'ticket_name'=>$value['ticket_name'],
+					'ticket_desc'=>$value['ticket_desc'],
+					'ticket_date_create'=>$value['ticket_date_create'],
+					'ticket_date_update'=>$value['ticket_date_update'],
+					'ticket_status'=>Yii::$app->mycomponent->progressName($value['ticket_status']),
+					'firstname'=>$value['firstname'],
+					'lastname'=>$value['lastname'],
+					'level_user'=>Yii::$app->mycomponent->roleName($value['level_user']),
+					'assigned'=>Yii::$app->mycomponent->assignedListNormal($value['ticket_id']),
+				);
+			}
+			
+			return $arrData;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
 	
 }

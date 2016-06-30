@@ -57,6 +57,7 @@ return [
                 'user-ticket'=> 'ticket/site/index',
                 'all-ticket'=> 'ticket/site/all-ticket',
                 'ticket-report'=> 'ticket/site/ticket-report',
+                'pdf-report'=> 'ticket/site/pdf-report',
             ],
         ],
     ],

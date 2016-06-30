@@ -31,6 +31,20 @@ $this->registerJs($jsx);
     </div>
 
     <div class="title_right">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <?php
+                /**
+                 * THE VIEW BUTTON
+                 */
+                echo Html::a('<i class="fa fa-file-pdf-o"></i> PDF', ['/pdf-report?progress='.$progress.'&month='.$month.'&year='.$year.' '], [
+                    'class'=>'btn btn-danger', 
+                    'target'=>'_blank', 
+                    'data-toggle'=>'tooltip', 
+                    'title'=>'generated PDF file'
+                ]);
+            ?>
+        </div>
+
         <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right top_search">
             <form  id="searchform" class="input-group"  action="<?=Yii::$app->homeUrl;?>ticket-report"  method="GET" > 
                 <div class="col-lg-4 col-md-4 col-xs-12">

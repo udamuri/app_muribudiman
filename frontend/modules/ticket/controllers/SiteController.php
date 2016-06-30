@@ -11,6 +11,7 @@ use yii\widgets\ActiveForm;
 use frontend\models\TableTicket;
 use frontend\modules\ticket\models\TicketForm;
 use frontend\modules\ticket\models\TicketModel;
+use kartik\mpdf\Pdf;
 /**
  * Default controller for the `ticket` module
  */
@@ -39,7 +40,7 @@ class SiteController extends Controller
                         }
                     ],
                     [
-                        'actions' => ['ticket-report'],
+                        'actions' => ['ticket-report', 'pdf-report'],
                         'allow' => true,
                         'roles' => ['@'],
 						'matchCallback' => function ($rule, $action) {
@@ -390,5 +391,53 @@ class SiteController extends Controller
             'progress' =>$progress,
             //'search' =>$search
         ]);  
+    }
+
+    public function actionPdfReport()
+    {
+        $progress ='';
+        if(isset($_GET['progress']))
+        {
+            $progress =  (int)$_GET['progress'];
+        }
+
+        $month ='';
+        if(isset($_GET['month']))
+        {
+            $month =  (int)$_GET['month'];
+        }
+
+        $year ='';
+        if(isset($_GET['year']))
+        {
+            $year =  (int)$_GET['year'];
+        }
+
+        $_model = new TicketModel();
+        $_model_data = $_model->printMpdf($progress, $month, $year);
+
+
+        // get your HTML raw content without any layouts or scripts
+        $content = $this->renderPartial('privacy', ['models'=>$_model_data]);
+
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE, 
+            'format' => Pdf::FORMAT_A4, 
+            'orientation' => Pdf::ORIENT_PORTRAIT, 
+            //'destination' => Pdf::DEST_BROWSER, 
+            'destination' => Pdf::DEST_DOWNLOAD, 
+            'content' => $content,  
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+            'cssInline' => '.kv-heading-1{font-size:18px}', 
+            'options' => ['title' => 'Krajee Report Title'],
+            'methods' => [ 
+                'SetHeader'=>['Ticket Report'], 
+                'SetFooter'=>['Page:{PAGENO}'],
+            ]
+        ]);
+
+        // return the pdf output as per the destination setting
+        return $pdf->render(); 
     }
 }
