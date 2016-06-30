@@ -57,6 +57,7 @@ $this->registerJs($jsx);
                     <thead>
                         <tr class="headings">
                             <th width="1%">No</th>
+                            <th></th>
                             <th>Username</th>
                             <th>Nama</th>
                             <th>User Division</th>
@@ -73,6 +74,7 @@ $this->registerJs($jsx);
                                 $start++; 
                                 echo '<tr class="odd gradeX">
                                         <td>'.$start.'</td>
+                                        <td id="avatar_username_'.$model['id'].'" > <img src="'.Yii::$app->mycomponent->userAvatar($model['id']).'" class="avatar-user"/> </td>
                                         <td id="user_username_'.$model['id'].'" >'.$model['username'].'</td>
                                         <td id="user_name_'.$model['id'].'" >'.$model['firstname'].' '.$model['lastname'].'</td>
                                         <td id="user_level_user_'.$model['id'].'" >'.Yii::$app->mycomponent->roleName($model['level_user']).'</td>

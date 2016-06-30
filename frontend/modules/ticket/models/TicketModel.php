@@ -153,6 +153,7 @@ class TicketModel extends Model
 			foreach ($row as $value) {
 				$arrData[] = array(
 					'ticket_id'=>$value['ticket_id'],
+					'user_id'=>$value['user_id'],
 					'ticket_name'=>$value['ticket_name'],
 					'ticket_desc'=>$value['ticket_desc'],
 					'ticket_date_create'=>$value['ticket_date_create'],

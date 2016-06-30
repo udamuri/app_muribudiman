@@ -17,6 +17,19 @@ class TaskComponent extends Component
 		return "Hello..Welcome to MyComponent My Name Muri Budiman";
 	}
 
+	public function userAvatar($uid)
+	{
+		$user_folder = 'folderuser';
+		$img = yii::getAlias('@frontend/web/folderuser/'.$uid.'profile.png');
+		$img_s = Yii::$app->homeUrl.'folderuser/'.$uid.'profile.png?'.time();
+		if(!file_exists($img))
+		{
+			$img_s = Yii::$app->homeUrl.'css/img/profile.png?'.time();
+		}
+		
+		return $img_s;
+	}
+
 	//Yii::$app->mycomponent->isUserRole($type, $level);
 	public function isUserRole($type, $level)
 	{

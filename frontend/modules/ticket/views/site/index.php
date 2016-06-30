@@ -58,6 +58,7 @@ $this->registerJs($jsx);
                     <thead>
                         <tr class="headings">
                             <th width="1%">No</th>
+                            <th></th>
                             <th>Ticket Name</th>
                             <th>Description</th>
                             <th>Create Date</th>
@@ -74,6 +75,7 @@ $this->registerJs($jsx);
                                 $assigned = Yii::$app->mycomponent->assignedList($model['ticket_id']);
                                 echo '<tr class="odd gradeX">
                                         <td>'.$start.'</td>
+                                        <td id="avatar_username_'.$model['user_id'].'" > <img src="'.Yii::$app->mycomponent->userAvatar($model['user_id']).'" class="avatar-user"/> </td>
                                         <td id="ticket_name_'.$model['ticket_id'].'" >
                                             '.$model['ticket_name'].'
                                             <div id="me-assigned-data-ticket-'.$model['ticket_id'].'" class="assigned-user">

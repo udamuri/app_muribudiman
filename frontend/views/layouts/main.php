@@ -62,6 +62,7 @@ AppAsset::register($this);
                           </ul>
                         </li>';
         }
+        $menuItems[] = ['label' => 'Edit Profile', 'url' => ['/profile']];
         //
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

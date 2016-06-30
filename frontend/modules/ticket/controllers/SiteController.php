@@ -429,7 +429,7 @@ class SiteController extends Controller
             'destination' => Pdf::DEST_DOWNLOAD, 
             'content' => $content,  
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-            'cssInline' => '.kv-heading-1{font-size:18px}', 
+            'cssInline' => '.kv-heading-1{font-size:18px} .avatar-user{width:40px;height:40px;-webkit-border-radius: 0.3em;-moz-border-radius: 0.3em;border-radius: 0.3em;}', 
             'options' => ['title' => 'Krajee Report Title'],
             'methods' => [ 
                 'SetHeader'=>['Ticket Report PT TRI SINAR PURNAMA'], 
