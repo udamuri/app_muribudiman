@@ -51,6 +51,7 @@ return [
                 'about'=>'site/about',
                 'contact'=>'site/contact',
                 //'signup'=>'site/signup',
+                'profile'=>'profile/site/index',
                 'login'=>'site/login',
                 'logout'=>'site/logout',
                 'user'=> 'admin/site/index',
@@ -67,6 +68,9 @@ return [
         ],
         'ticket' => [
             'class' => 'app\modules\ticket\Module',
+        ],
+        'profile' => [
+            'class' => 'app\modules\profile\Module',
         ],
     ],
     'params' => $params,
