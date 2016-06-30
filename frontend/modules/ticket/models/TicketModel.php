@@ -114,11 +114,11 @@ class TicketModel extends Model
 		
 	}
 
-	public function printMpdf($progress = 0, $month = 0, $year= 0)
+	public function printMpdf($progress = 1000, $month = 0, $year= 0)
 	{
 
 		$ticket_status = '';        
-        if($progress != '1000' && $progress !== '' )
+        if($progress != 1000 && $progress != '' )
         {
             $ticket_status = ' AND ticket_status ='.$progress.' ';  
         }

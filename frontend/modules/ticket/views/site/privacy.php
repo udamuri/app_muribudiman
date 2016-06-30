@@ -32,7 +32,7 @@ $this->title = 'Report PDF';
                         <td>
                             '.$model['ticket_name'].'
                             <div class="assigned-user">
-                                Asigned :'. $model['assigned'] .'
+                                '. str_replace('&nbsp', '|', $model['assigned']) .'
                             </div>
                         </td>
                         <td>'.$model['ticket_desc'].'</td>

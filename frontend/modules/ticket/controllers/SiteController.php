@@ -432,7 +432,7 @@ class SiteController extends Controller
             'cssInline' => '.kv-heading-1{font-size:18px}', 
             'options' => ['title' => 'Krajee Report Title'],
             'methods' => [ 
-                'SetHeader'=>['Ticket Report'], 
+                'SetHeader'=>['Ticket Report PT TRI SINAR PURNAMA'], 
                 'SetFooter'=>['Page:{PAGENO}'],
             ]
         ]);
